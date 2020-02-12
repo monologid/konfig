@@ -1,0 +1,2 @@
+# konfig
+Centralized configuration management
