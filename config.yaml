@@ -1,0 +1,5 @@
+APP_PORT: 3030
+APP_LOG_FOLDER: './logs'
+
+DATABASE_NAME: 'konfig'
+DATABASE_URI: 'mongodb://localhost/konfig?retryWrite=true&w=majority'
