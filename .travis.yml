@@ -1,0 +1,19 @@
+dist: bionic
+
+language: node_js
+
+node_js:
+  - 12
+
+before_scripts:
+  - npm i -g yarn
+
+install:
+  - yarn
+
+jobs:
+  include:
+    - stage: test
+      name: Test Project
+      script:
+        - npm test

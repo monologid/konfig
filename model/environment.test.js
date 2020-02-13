@@ -19,3 +19,8 @@ test('validateName should return undefined if name char length is more than 1', 
   let model = new EnvironmentModel({ name: 'staging' });
   expect(model.validateName()).toBeUndefined();
 });
+
+test('toJSON should return correct json', () => {
+  let model = new EnvironmentModel({ applicationId: '12345', name: 'staging' });
+  expect(model.toJSON()).not.toBeUndefined();
+});
