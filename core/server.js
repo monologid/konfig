@@ -12,21 +12,28 @@ import { createTerminus } from '@godaddy/terminus';
 export default class Express {
   constructor() {
     console.time('Initialize application server');
-    this.server = express();
+    this.app = express();
 
-    this.server.use(bodyParser.json({ extended: true, limit: '50mb' }));
+    this.app.use(bodyParser.json({ extended: true, limit: '50mb' }));
  
-    this.server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
-    this.server.use(compression());
-    this.server.use(cors());
-    this.server.use(helmet());
-    this.server.use(expressWinston.logger(ExpressLogger));
-    this.server.use(expressWinston.errorLogger(ExpressLogger));
+    this.app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+    this.app.use(compression());
+    this.app.use(cors());
+    this.app.use(helmet());
+    this.app.use(expressWinston.logger(ExpressLogger));
+    this.app.use(expressWinston.errorLogger(ExpressLogger));
+
+    this.server = http.createServer(this.app);
   }
 
   onSignal() {
-    console.log('got terminate signals');
-    return Promise.resolve();
+    console.time('Shutting down server');
+    this.server.close(() => {
+      if (!process.env.NODE_ENV) return process.exit(1);
+      console.timeEnd('Shutting down server');
+      process.exit();
+      Promise.resolve();
+    });
   }
 
   onShutDown() {
@@ -38,10 +45,9 @@ export default class Express {
   }
 
   start() {
-    const server = http.createServer(this.server);
     const opts = {
       timeout: 10000,
-      signals: [ 'SIGINT', 'SIGTERM' ],
+      signals: [ 'SIGTERM' ],
       onSignal: this.onSignal,
       onShutDown: this.onShutDown,
       healthChecks: {
@@ -49,8 +55,8 @@ export default class Express {
       },
     }
 
-    createTerminus(server, opts);
-    server.listen(CONFIG.APP_PORT || 3030);
+    createTerminus(this.server, opts);
+    this.server.listen(CONFIG.APP_PORT || 3030);
     console.timeEnd('Initialize application server');
   }
 }
