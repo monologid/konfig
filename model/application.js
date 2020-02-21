@@ -2,9 +2,10 @@ import Error from '../const/error';
 import StringUtil from '../util/string';
 
 export default class ApplicationModel {
-  constructor({ name, description = undefined }) {
+  constructor({ name, type = 'json', description = undefined }) {
     this.name = name;
     this.slug = new StringUtil(this.name).generateSlug();
+    this.type = type;
     this.description = description;
   }
 
@@ -17,6 +18,7 @@ export default class ApplicationModel {
     return {
       name: this.name,
       slug: this.slug,
+      type: this.type,
       description: this.description
     }
   }
