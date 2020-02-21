@@ -1,7 +1,7 @@
 import Error from '../const/error';
 import StringUtil from '../util/string';
 
-export default class Environment {
+export default class Namespace {
   constructor({ applicationId = undefined, name, variable = {}}) {
     this.applicationId = applicationId;
     this.name = name;
@@ -22,7 +22,7 @@ export default class Environment {
     return {
       applicationId: this.applicationId,
       name: this.name,
-      description: this.description
+      variable: this.variable
     }
   }
 }
