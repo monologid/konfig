@@ -15,6 +15,7 @@ export default class Namespace {
 
   validateName() {
     if (!this.name || (this.name && this.name.length < 1)) return Error.NamespaceNameMinLength;
+    this.slug = new StringUtil(this.name).generateSlug();
     return undefined;
   }
 
@@ -22,6 +23,7 @@ export default class Namespace {
     return {
       applicationId: this.applicationId,
       name: this.name,
+      slug: this.slug,
       variable: this.variable
     }
   }

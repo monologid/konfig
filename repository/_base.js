@@ -40,11 +40,11 @@ export default class BaseRepository {
 
   async update({ query, params, upsert = false, isMulti = false }) {
     query.deletedAt = this.deletedAt;
+    const datetime = new DateUtil();
     params.updatedAt = datetime.toISOFormatString();
-    if (isMulti) 
-      return await this.collection.updateMany(query, { $set: params }, { upsert: isUpsert });
     
-    return await this.collection.updateOne(query, { $set: params }, { upsert: isUpsert });
+    if (isMulti) return await this.collection.updateMany(query, { $set: params }, { upsert });
+    return await this.collection.updateOne(query, { $set: params }, { upsert });
   }
 }
 

@@ -12,5 +12,7 @@ test('validateName should return error', () => {
 
 test('toJSON should include slug', () => {
   let model = new ApplicationModel({ name: 'Lorem IPsum' });
+  let err = model.validateName();
+  expect(err).toBeUndefined();
   expect(model.toJSON().slug).toBe('lorem-ipsum');
 });
