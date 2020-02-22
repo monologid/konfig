@@ -9,12 +9,12 @@ export default class Namespace {
   }
 
   validateApplicationId() {
-    if (!this.applicationId) return Error.EnvAppIdIsMandatory;
+    if (!this.applicationId) return Error.NamespaceAppIdIsMandatory;
     return undefined;
   }
 
   validateName() {
-    if (!this.name || (this.name && this.name.length < 1)) return Error.EnvNameMinLength;
+    if (!this.name || (this.name && this.name.length < 1)) return Error.NamespaceNameMinLength;
     return undefined;
   }
 

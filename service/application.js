@@ -8,7 +8,7 @@ export default class ApplicationService {
   }
 
   async register({ name, type, description }) {
-    let applicationModel = new ApplicationModel({ name, description });
+    let applicationModel = new ApplicationModel({ name, type, description });
     let err = applicationModel.validateName();
     if (err) return [err];
 
