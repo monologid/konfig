@@ -4,13 +4,13 @@ import StringUtil from '../util/string';
 export default class ApplicationModel {
   constructor({ name, type = 'json', description = undefined }) {
     this.name = name;
-    this.slug = new StringUtil(this.name).generateSlug();
     this.type = type;
     this.description = description;
   }
 
   validateName() {
-    if (this.name.length < 3) return Error.AppNameMinLength;
+    if (!this.name || (this.name && this.name.length < 3)) return Error.AppNameMinLength;
+    this.slug = new StringUtil(this.name).generateSlug();
     return undefined;
   }
 

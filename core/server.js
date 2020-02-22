@@ -9,6 +9,8 @@ import http from 'http';
 import { ExpressLogger } from './log';
 import { createTerminus } from '@godaddy/terminus';
 
+import ApiRouter from '../route/api';
+
 export default class Express {
   constructor() {
     console.time('Initialize application server');
@@ -24,6 +26,12 @@ export default class Express {
     this.app.use(expressWinston.errorLogger(ExpressLogger));
 
     this.server = http.createServer(this.app);
+  }
+
+  initiateRouter() {
+    console.time('Initialize application router');
+    new ApiRouter(this.app);
+    console.timeEnd('Initialize application router');
   }
 
   onSignal() {
@@ -56,7 +64,9 @@ export default class Express {
     }
 
     createTerminus(this.server, opts);
+    this.initiateRouter();
     this.server.listen(CONFIG.APP_PORT || 3030);
     console.timeEnd('Initialize application server');
+    console.log(`KONFIG started at :${CONFIG.APP_PORT || 3030}`);
   }
 }

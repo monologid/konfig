@@ -2,7 +2,7 @@ import moment from 'moment';
 
 export default class DateUtil {
   constructor(date) {
-    this.date = moment(date) || moment();
+    this.date = (date) ? moment(date) : moment();
   }
 
   toISOFormatString() {
