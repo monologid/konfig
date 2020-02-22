@@ -37,6 +37,14 @@ test('create should return success', async () => {
   expect(err).toBeUndefined();
 });
 
+test('updateVariable should return success', async () => {
+  let mockNamespaceRepo = new MockNamespaceRepository();
+  let svc = new NamespaceService({ namespaceRepository: mockNamespaceRepo });
+
+  let [err] = await svc.updateVariable({ namespaceId: '12345', variable: {} });
+  expect(err).toBeUndefined();
+});
+
 test('mergeVariable should return success', async () => {
   let mockNamespaceRepo = new MockNamespaceRepository();
   let svc = new NamespaceService({ namespaceRepository: mockNamespaceRepo });
