@@ -22,12 +22,13 @@ export default class Namespace {
   }
 
   async updateVariable({ namespaceId, variable }) {
-    let query = { id: namespaceId };
+    let query = { _id: namespaceId };
     let params = { variable }
 
     await this.namespaceRepository.update({ query, params });
 
-    return [undefined];
+    const namespace = await this.namespaceRepository.findById(namespaceId);
+    return [undefined, namespace.variable];
   }
 
   async mergeVariable({ sourceNamespaceId, targetNamespaceId }) {

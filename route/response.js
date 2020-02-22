@@ -16,5 +16,6 @@ export default class Response {
     res
       .status(req.response.statusCode)
       .json(responseBody)
+      .end()
   }
 }
