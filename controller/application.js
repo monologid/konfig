@@ -1,4 +1,5 @@
 import ApplicationService from '../service/application';
+import NamespaceService from '../service/namespace';
 
 export default class ApplicationController {
   constructor() {}
@@ -24,6 +25,7 @@ export default class ApplicationController {
 
   async create(req, res, next) {
     let applicationService = new ApplicationService({});
+    let namespaceService = new NamespaceService({});
     
     let [err, application] = await applicationService.register(req.body);
     if (err) {
@@ -33,6 +35,8 @@ export default class ApplicationController {
       };
       return next();
     }
+
+    await namespaceService.create({ applicationId: application._id, name: 'default' });
     
     req.response = {
       statusCode: 200,
