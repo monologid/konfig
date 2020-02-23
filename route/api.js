@@ -14,5 +14,6 @@ export default class ApiRouter {
 
     e.get('/api/v1/namespace', namespaceCtrl.create, res.sendJSON);
     e.put('/api/v1/namespace/:namespace_id/variable', namespaceCtrl.updateVariable, res.sendJSON)
+    e.get('/api/v1/namespace/variable/merge', namespaceCtrl.mergeVariable, res.sendJSON);
   }
 }

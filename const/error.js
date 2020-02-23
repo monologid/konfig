@@ -10,7 +10,9 @@ const Error = {
 
   // All errors related with Namespace
   NamespaceNameMinLength: 'Namespace name should be at least 1 character',
-  NamespaceAppIdIsMandatory: 'Application ID cannot be undefined'
+  NamespaceAppIdIsMandatory: 'Application ID cannot be undefined',
+  NamespaceSourceIdIsMandatory: 'Source Namespace ID cannot be undefined',
+  NamespaceTargetIdIsMandatory: 'Target Namespace ID cannot be undefined'
 }
 
 export default Error

@@ -53,3 +53,19 @@ test('mergeVariable should return success', async () => {
   expect(err).toBeUndefined();
   expect(finalVariable).toEqual({ host: '1.1.1.1', port: 9000 })
 });
+
+test('mergeVariable should return error if source namespace id is undefined', async () => {
+  let mockNamespaceRepo = new MockNamespaceRepository();
+  let svc = new NamespaceService({ namespaceRepository: mockNamespaceRepo });
+
+  let [err] = await svc.mergeVariable({ targetNamespaceId: '1234' });
+  expect(err).toBe(Error.NamespaceSourceIdIsMandatory);
+});
+
+test('mergeVariable should return error if target namespace id is undefined', async () => {
+  let mockNamespaceRepo = new MockNamespaceRepository();
+  let svc = new NamespaceService({ namespaceRepository: mockNamespaceRepo });
+
+  let [err] = await svc.mergeVariable({ sourceNamespaceId: '1234' });
+  expect(err).toBe(Error.NamespaceTargetIdIsMandatory);
+});

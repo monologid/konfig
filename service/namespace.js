@@ -1,6 +1,7 @@
 import NamespaceRepository from '../repository/namespace';
 import NamespaceModel from '../model/namespace';
 import lo from 'lodash';
+import Error from '../const/error';
 
 export default class Namespace {
   constructor({ namespaceRepository }) {
@@ -32,6 +33,9 @@ export default class Namespace {
   }
 
   async mergeVariable({ sourceNamespaceId, targetNamespaceId }) {
+    if (!sourceNamespaceId) return [Error.NamespaceSourceIdIsMandatory];
+    if (!targetNamespaceId) return [Error.NamespaceTargetIdIsMandatory];
+
     let sourceNamespace = await this.namespaceRepository.findById(sourceNamespaceId);
     let targetNamespace = await this.namespaceRepository.findById(targetNamespaceId);
 

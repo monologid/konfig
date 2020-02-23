@@ -44,4 +44,24 @@ export default class NamespaceController {
     };
     next();
   }
+
+  async mergeVariable(req, res, next) {
+    let namespaceService = new NamespaceService({});
+
+    let { sourceNamespaceId, targetNamespaceId } = req.query;
+    let [err, variable] = await namespaceService.mergeVariable({ sourceNamespaceId, targetNamespaceId });
+    if (err) {
+      req.response = {
+        statusCode: 500,
+        error: err
+      };
+      return next();
+    }
+
+    req.response = {
+      statusCode: 200,
+      data: { variable }
+    };
+    next();
+  }
 }
